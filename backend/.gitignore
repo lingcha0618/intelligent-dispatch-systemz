@@ -12,3 +12,5 @@ logs/
 .DS_Store
 Thumbs.db
 application-local.yml
+application-dev.yml
+api-docs.json
