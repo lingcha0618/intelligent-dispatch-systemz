@@ -44,14 +44,14 @@ mysql -uroot -p --default-character-set=utf8mb4 < backend/src/main/resources/db/
 
 ### 2. 修改后端配置
 
-编辑 `backend/src/main/resources/application-dev.yml`，将数据库账号密码改为你本机的：
+复制 `backend/src/main/resources/application-dev.yml.example` 为 `application-dev.yml`，然后编辑并填入你本机的数据库账号密码：
 
 ```yaml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/campus_dispatch?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-    username: root          # 改成你的用户名
-    password: root123       # 改成你的密码
+    username: your_username    # 改成你的用户名
+    password: your_password    # 改成你的密码
 ```
 
 Redis / RabbitMQ 若在本机默认端口且未设密码，无需修改。
@@ -79,9 +79,21 @@ npm run dev
 
 | 账号 | 密码 | 角色 |
 |------|------|------|
-| admin | 123456 | 超级管理员 |
+| admin | `<初始密码>` | 超级管理员 |
 
-管理员登录后可在"用户端"与"管理后台"之间自由切换（学生端顶部有"切换到管理后台"按钮）。
+初始密码在 `sql/init.sql` 中定义（BCrypt 加密存储），首次登录后请立即修改。管理员登录后可在"用户端"与"管理后台"之间自由切换（学生端顶部有"切换到管理后台"按钮）。
+
+## 安全提示
+
+- **JWT 密钥**：生产环境务必通过环境变量设置强随机密钥（至少 32 位），切勿使用代码中的默认值：
+  ```bash
+  # Linux / macOS
+  export JWT_SECRET="<随机字符串>"
+  # Windows（PowerShell，永久生效）
+  setx JWT_SECRET "<随机字符串>"
+  ```
+- **初始账号**：`sql/init.sql` 中的超管密码仅为演示用途，部署后请立即登录修改
+- **本地配置**：`application-dev.yml` 含本机密码等敏感信息，已被 `.gitignore` 忽略，请基于 `.example` 模板创建
 
 ## Windows 一键启动
 
@@ -125,7 +137,7 @@ cd frontend && npm run build
 │   │   ├── job/                   # 定时任务（违约判定、到期提醒）
 │   │   └── modules/               # auth / resource / booking / notice / violation / user / config / dashboard / forecast / export
 │   └── src/main/resources/
-│       ├── application.yml        # 主配置（含 JWT secret）
+│       ├── application.yml        # 主配置（JWT 密钥经 JWT_SECRET 环境变量注入）
 │       ├── application-dev.yml    # 开发环境（数据源、Redis、RabbitMQ）
 │       └── db/init.sql            # 数据库初始化脚本（utf8mb4）
 └── frontend/                      # Vue 3 前端

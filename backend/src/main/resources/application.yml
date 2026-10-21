@@ -25,7 +25,7 @@ mybatis-plus:
   type-aliases-package: com.campus.dispatch.modules.*.entity
 
 jwt:
-  secret: ${JWT_SECRET:campus-dispatch-256-bit-secret-key-please-change-in-production-123456}
+  secret: ${JWT_SECRET:dev-only-insecure-secret-set-JWT_SECRET-env-var-in-production}
   expire: 86400
 
 knife4j:
