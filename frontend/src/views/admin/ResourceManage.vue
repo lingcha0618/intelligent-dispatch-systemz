@@ -43,8 +43,8 @@
       </el-table-column>
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="{ row }">
-          <el-button size="small" @click="openDialog(row)">编辑</el-button>
-          <el-button size="small" type="danger" @click="handleDelete(row)">删除</el-button>
+          <el-button size="small" @click="openDialog(row as ResourceVO)">编辑</el-button>
+          <el-button size="small" type="danger" @click="handleDelete(row as ResourceVO)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -126,7 +126,7 @@ const form = reactive<ResourceDTO>({
   name: '', type: 1, location: '', capacity: 10, status: 0, description: '',
 })
 
-function statusType(s: number) {
+function statusType(s: number): 'success' | 'warning' | 'info' {
   return s === 0 ? 'success' : s === 1 ? 'warning' : 'info'
 }
 

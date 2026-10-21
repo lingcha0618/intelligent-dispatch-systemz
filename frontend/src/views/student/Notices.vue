@@ -83,8 +83,8 @@ function noticeTypeClass(type: number) {
   return classes[type] || ''
 }
 
-function noticeTagType(type: number) {
-  const map: Record<number, string> = { 1: 'success', 2: 'warning', 3: 'danger', 4: 'info' }
+function noticeTagType(type: number): 'success' | 'warning' | 'danger' | 'info' {
+  const map: Record<number, 'success' | 'warning' | 'danger' | 'info'> = { 1: 'success', 2: 'warning', 3: 'danger', 4: 'info' }
   return map[type] || 'info'
 }
 

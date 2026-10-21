@@ -44,8 +44,8 @@
       </el-table-column>
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="{ row }">
-          <el-button v-if="row.status === 0" type="primary" size="small" @click="handleCheckin(row)">签到</el-button>
-          <el-button v-if="row.status === 0" type="danger" size="small" plain @click="handleCancel(row)">取消</el-button>
+          <el-button v-if="row.status === 0" type="primary" size="small" @click="handleCheckin(row as BookingVO)">签到</el-button>
+          <el-button v-if="row.status === 0" type="danger" size="small" plain @click="handleCancel(row as BookingVO)">取消</el-button>
           <span v-if="row.status !== 0" class="no-action">-</span>
         </template>
       </el-table-column>
@@ -81,8 +81,8 @@ const filter = reactive({
   status: undefined as number | undefined,
 })
 
-function bookingStatusType(status: number) {
-  const map: Record<number, string> = { 0: 'warning', 1: 'success', 2: 'info', 3: 'info', 4: 'danger' }
+function bookingStatusType(status: number): 'success' | 'warning' | 'info' | 'danger' {
+  const map: Record<number, 'success' | 'warning' | 'info' | 'danger'> = { 0: 'warning', 1: 'success', 2: 'info', 3: 'info', 4: 'danger' }
   return map[status] || 'info'
 }
 

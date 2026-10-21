@@ -22,10 +22,10 @@ service.interceptors.response.use(
   (response: AxiosResponse<Result>) => {
     const res = response.data
     if (response.config.responseType === 'blob') {
-      return response as unknown as Result
+      return response
     }
     if (res.code === 200 || res.code === 0) {
-      return res
+      return res as unknown as AxiosResponse
     }
     if (res.code === 401) {
       ElMessageBox.confirm('登录状态已过期，请重新登录', '提示', {

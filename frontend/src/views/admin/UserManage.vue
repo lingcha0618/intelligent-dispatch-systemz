@@ -37,8 +37,8 @@
       </el-table-column>
       <el-table-column label="操作" width="160" fixed="right">
         <template #default="{ row }">
-          <el-button v-if="row.status === 0" size="small" type="danger" @click="handleBan(row)">封禁</el-button>
-          <el-button v-else size="small" type="success" @click="handleUnban(row)">解封</el-button>
+          <el-button v-if="row.status === 0" size="small" type="danger" @click="handleBan(row as UserVO)">封禁</el-button>
+          <el-button v-else size="small" type="success" @click="handleUnban(row as UserVO)">解封</el-button>
         </template>
       </el-table-column>
     </el-table>

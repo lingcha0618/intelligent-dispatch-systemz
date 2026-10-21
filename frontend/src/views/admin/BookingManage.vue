@@ -73,8 +73,8 @@ const filter = reactive({
   userId: undefined as number | undefined,
 })
 
-function statusType(s: number) {
-  const map: Record<number, string> = { 0: 'warning', 1: 'success', 2: 'info', 3: 'info', 4: 'danger' }
+function statusType(s: number): 'success' | 'warning' | 'info' | 'danger' {
+  const map: Record<number, 'success' | 'warning' | 'info' | 'danger'> = { 0: 'warning', 1: 'success', 2: 'info', 3: 'info', 4: 'danger' }
   return map[s] || 'info'
 }
 
