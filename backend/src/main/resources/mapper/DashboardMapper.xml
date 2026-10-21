@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.dispatch.modules.dashboard.mapper.DashboardMapper">
+
+    <select id="countResource" resultType="long">
+        SELECT COUNT(*) FROM campus_resource WHERE deleted = 0
+    </select>
+
+    <select id="countInUseBooking" resultType="long">
+        SELECT COUNT(*) FROM resource_booking WHERE status = 1 AND deleted = 0
+    </select>
+
+    <select id="countTodayBooking" resultType="long">
+        SELECT COUNT(*) FROM resource_booking WHERE DATE(create_time) = CURDATE() AND deleted = 0
+    </select>
+
+    <select id="countViolation" resultType="long">
+        SELECT COUNT(*) FROM user_violation
+    </select>
+
+    <select id="countTotalBooking" resultType="long">
+        SELECT COUNT(*) FROM resource_booking WHERE deleted = 0
+    </select>
+
+    <select id="selectTrend" resultType="com.campus.dispatch.modules.dashboard.vo.TrendPointVO">
+        SELECT DATE(create_time) AS date, COUNT(*) AS count
+        FROM resource_booking
+        WHERE create_time &gt;= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
+          AND deleted = 0
+        GROUP BY DATE(create_time)
+        ORDER BY date
+    </select>
+
+    <select id="selectOccupancy" resultType="com.campus.dispatch.modules.dashboard.vo.OccupancyVO">
+        SELECT resource_id AS resourceId, COUNT(*) AS count
+        FROM resource_booking
+        WHERE status IN (0, 1)
+          AND deleted = 0
+        <if test="resourceId != null">
+            AND resource_id = #{resourceId}
+        </if>
+        GROUP BY resource_id
+    </select>
+
+</mapper>

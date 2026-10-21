@@ -1,0 +1,34 @@
+# 依赖
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 构建产物
+dist/
+build/
+target/
+out/
+*.egg-info/
+
+# 日志与临时文件
+*.log
+logs/
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE 与工具
+.idea/
+.vscode/
+*.iml
+.arts/
+.codeartsdoer/
+.merkle-snapshot.json
+
+# 环境变量与敏感配置
+.env
+.env.*
+*.local

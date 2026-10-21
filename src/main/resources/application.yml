@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: campus-booking-server
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# 业务自定义配置
+jwt:
+  secret: campus-booking-jwt-secret-key-please-change-this-32-bytes
+  expire-minutes: 120
+  header: Authorization
+  prefix: "Bearer "
+
+# 预约业务规则
+booking:
+  max-per-day: 3               # 单人单日最大预约次数
+  max-duration: 120            # 单次最长预约时长(分钟)
+  lock-ttl-seconds: 300        # Redis 短时资源锁定时长(秒)，默认5分钟
+  sign-timeout-minutes: 15     # 预约开始后未签到的违约判定时长(分钟)

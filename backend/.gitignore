@@ -1,0 +1,14 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.idea/
+*.iml
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+*.log
+logs/
+.DS_Store
+Thumbs.db
+application-local.yml

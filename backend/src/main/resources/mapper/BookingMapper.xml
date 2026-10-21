@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.dispatch.modules.booking.mapper.BookingMapper">
+
+    <!-- 冲突检测：与有效状态(待签到0/使用中1)且时段重叠的预约 -->
+    <select id="selectConflicts" resultType="com.campus.dispatch.modules.booking.entity.ResourceBooking">
+        SELECT id, user_id, resource_id, request_id, start_time, end_time, status,
+               check_in_time, deleted, create_time, update_time
+        FROM resource_booking
+        WHERE resource_id = #{resourceId}
+          AND start_time &lt; #{endTime}
+          AND end_time &gt; #{startTime}
+          AND status IN (0, 1)
+          AND deleted = 0
+    </select>
+
+</mapper>
